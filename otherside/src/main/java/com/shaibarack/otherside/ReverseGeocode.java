@@ -17,10 +17,12 @@ public class ReverseGeocode extends AsyncTask<LatLng, Void, String> {
 
     private final Context mContext;
     private final TextView mTextView;
+    private final boolean mIncludeAddress;
 
-    public ReverseGeocode(Context context, TextView textView) {
+    public ReverseGeocode(Context context, TextView textView, boolean includeAddress) {
         mContext = context;
         mTextView = textView;
+        mIncludeAddress = includeAddress;
     }
 
     @Override
@@ -37,7 +39,19 @@ public class ReverseGeocode extends AsyncTask<LatLng, Void, String> {
             if (addresses.isEmpty()) {
                 return null;
             }
-            return addresses.get(0).getCountryName();
+            Address address = addresses.get(0);
+            if (mIncludeAddress) {
+                String addressStr = "";
+                if (address.getAddressLine(0) != null) {
+                    addressStr += address.getAddressLine(0) + "\n";
+                }
+                if (address.getAdminArea() != null) {
+                    addressStr += address.getAdminArea() + ", ";
+                }
+                return addressStr + address.getCountryName();
+            } else {
+                return address.getCountryName();
+            }
         } catch (IOException e) {
             return null;
         }

@@ -9,6 +9,7 @@
     <string name="action_flip">הפוך</string>
     <string name="action_about">אודות</string>
     <string name="action_help">עזרה</string>
+    <string name="action_addresses">הצג כתובות</string>
     <string name="about_message">נכתב ע\"י שי ברק באחר צהריים משעמם.</string>
 
 </resources>
