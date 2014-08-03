@@ -18,4 +18,9 @@
         android:title="@string/action_about"
         android:icon="@drawable/ic_action_action_about"
         app:showAsAction="ifRoom|withText" />
+
+    <item android:id="@+id/action_help"
+        android:title="@string/action_help"
+        android:icon="@drawable/ic_action_action_help"
+        app:showAsAction="ifRoom|withText" />
 </menu>

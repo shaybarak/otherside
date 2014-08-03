@@ -1,13 +1,11 @@
 package com.shaibarack.otherside;
 
 import android.app.AlertDialog;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -37,12 +35,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
         mAddress = (TextView) findViewById(R.id.address);
 
         if (isFirstRun()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.first_run_title)
-                    .setMessage(R.string.first_run_message)
-                    .setPositiveButton(R.string.alert_ok, null)
-                    .setIcon(R.drawable.ic_action_flip)
-                    .create().show();
+            showFirstRunDialog();
         }
     }
 
@@ -72,6 +65,10 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
                     .setPositiveButton(R.string.alert_ok, null)
                     .create().show();
             return true;
+        }
+
+        if (id == R.id.action_help) {
+            showFirstRunDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -115,5 +112,14 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
                 .putBoolean(FIRST_RUN_PREFERENCE, false)
                 .commit();
         return firstRun;
+    }
+
+    private void showFirstRunDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.first_run_title)
+                .setMessage(R.string.first_run_message)
+                .setPositiveButton(R.string.alert_ok, null)
+                .setIcon(R.drawable.ic_action_flip)
+                .create().show();
     }
 }
