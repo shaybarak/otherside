@@ -38,7 +38,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
 
         // Restore "show addresses" preference
         mShowAddresses = getSharedPreferences(PREFERENCE, MODE_PRIVATE)
-                .getBoolean(SHOW_ADDRESSES_PREFERENCE, false);
+                .getBoolean(SHOW_ADDRESSES_PREFERENCE, true);
 
         if (isFirstRun()) {
             showFirstRunDialog();

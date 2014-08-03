@@ -27,5 +27,6 @@
     <item android:id="@+id/action_addresses"
         android:title="@string/action_addresses"
         android:checkable="true"
+        android:checked="true"
         app:showAsAction="never" />
 </menu>
