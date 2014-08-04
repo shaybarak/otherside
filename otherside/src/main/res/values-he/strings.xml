@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">הצד השני</string>
+    <string name="first_run_title">מה זה הדבר הזה?</string>
+    <string name="first_run_message">טייל במפה ולחץ על כפתור ההפיכה כדי לראות מה נמצא בצד השני של העולם.</string>
+    <string name="alert_ok">מאוד מעניין</string>
+    <string name="action_search">חפש</string>
+    <string name="action_flip">הפוך</string>
+    <string name="action_about">אודות</string>
+    <string name="action_help">עזרה</string>
+    <string name="action_addresses">הצג כתובות</string>
+    <string name="about_message">נכתב ע\"י שי ברק באחר צהריים משעמם.</string>
+
+</resources>
