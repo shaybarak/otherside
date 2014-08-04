@@ -1,13 +1,11 @@
 package com.shaibarack.otherside;
 
 import android.app.AlertDialog;
-import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,9 +18,11 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
 
     private static final String PREFERENCE = "PREFERENCE";
     private static final String FIRST_RUN_PREFERENCE = "first_run";
+    private static final String SHOW_ADDRESSES_PREFERENCE = "show_addresses";
 
     private GoogleMap mMap;
     private TextView mAddress;
+    private boolean mShowAddresses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,19 +36,19 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
 
         mAddress = (TextView) findViewById(R.id.address);
 
+        // Restore "show addresses" preference
+        mShowAddresses = getSharedPreferences(PREFERENCE, MODE_PRIVATE)
+                .getBoolean(SHOW_ADDRESSES_PREFERENCE, true);
+
         if (isFirstRun()) {
-            new AlertDialog.Builder(this)
-                    .setTitle(R.string.first_run_title)
-                    .setMessage(R.string.first_run_message)
-                    .setPositiveButton(R.string.alert_ok, null)
-                    .setIcon(R.drawable.ic_action_flip)
-                    .create().show();
+            showFirstRunDialog();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.action_addresses).setChecked(mShowAddresses);
         /*MenuItem searchItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);*/
@@ -65,6 +65,17 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
             return true;
         }
 
+        if (id == R.id.action_addresses) {
+            // Set the checked state
+            item.setChecked(!item.isChecked());
+            // Save the preference
+            getSharedPreferences(PREFERENCE, MODE_PRIVATE)
+                    .edit()
+                    .putBoolean(SHOW_ADDRESSES_PREFERENCE, item.isChecked())
+                    .commit();
+            mShowAddresses = item.isChecked();
+        }
+
         if (id == R.id.action_about) {
             new AlertDialog.Builder(this)
                     .setTitle(R.string.app_name)
@@ -72,6 +83,10 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
                     .setPositiveButton(R.string.alert_ok, null)
                     .create().show();
             return true;
+        }
+
+        if (id == R.id.action_help) {
+            showFirstRunDialog();
         }
 
         return super.onOptionsItemSelected(item);
@@ -84,7 +99,7 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
 
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
-        new ReverseGeocode(this, mAddress).execute(cameraPosition.target);
+        new ReverseGeocode(this, mAddress, mShowAddresses).execute(cameraPosition.target);
     }
 
     @Override
@@ -115,5 +130,14 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
                 .putBoolean(FIRST_RUN_PREFERENCE, false)
                 .commit();
         return firstRun;
+    }
+
+    private void showFirstRunDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.first_run_title)
+                .setMessage(R.string.first_run_message)
+                .setPositiveButton(R.string.alert_ok, null)
+                .setIcon(R.drawable.ic_action_flip)
+                .create().show();
     }
 }

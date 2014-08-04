@@ -8,6 +8,8 @@
     <string name="action_search">Search</string>
     <string name="action_flip">Flip</string>
     <string name="action_about">About</string>
+    <string name="action_help">Help</string>
+    <string name="action_addresses">Show Addresses</string>
     <string name="about_message">Written by Shai Barack in one boring afternoon.</string>
 
 </resources>
