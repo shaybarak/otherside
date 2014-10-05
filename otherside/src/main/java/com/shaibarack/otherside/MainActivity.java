@@ -74,6 +74,9 @@ public class MainActivity extends ActionBarActivity implements GoogleMap.OnCamer
                     .putBoolean(SHOW_ADDRESSES_PREFERENCE, item.isChecked())
                     .commit();
             mShowAddresses = item.isChecked();
+
+            // Now refresh the current location toast, to show or hide the address immediately
+            onCameraChange(mMap.getCameraPosition());
         }
 
         if (id == R.id.action_about) {
